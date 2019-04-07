@@ -9,7 +9,7 @@ dir=$(dirname $(realpath $0))
 
 write_help()
 {
-	echo "usage: recon.sh {init|track|sync|history|search|notes|artifacts|help} [<args>]"
+	echo "usage: recon.sh {init|track|sync|history|search|notes|artifacts|help|info|update} [<args>]"
 	if [ "$1" == "extended" ]; then
 		echo
 		echo "   init		initialize and configure recon.sh"
@@ -19,6 +19,8 @@ write_help()
 		echo "   search	use regular expressions to search through output"
 		echo "   notes	track raw notes for a project"
 		echo "   artifacts	track binary files"
+		echo "   update  add and commit all files in repository"
+		echo "   info  show current recon directory"
 	fi
 }
 
@@ -27,7 +29,7 @@ case $1 in
 		$dir/recon-init.sh "$2"
 		;;
 		"track")
-		$dir/recon-track.sh "$2" "$3"
+		$dir/recon-track.sh "$2" "$3" "$4"
 		;;
 		"sync")
 		$dir/recon-sync.sh
@@ -46,6 +48,12 @@ case $1 in
 		;;
 		"help")
 		write_help "extended"
+		;;
+		"update")
+		$dir/recon-update.sh "$2"
+		;;
+		"info")
+		$dir/recon-info.sh
 		;;
 		*)
 		write_help

@@ -1,19 +1,16 @@
-if [ -e ~/.recon-directory ]; then
-	echo "error: ~/.recon-directory exists"
+if [ -z "$1" ]; then
+	directory=`pwd`
 else
-	if [ -z "$1" ]; then
-		echo "usage: recon.sh init <directory>"
-	else
-		if [ -d $1 ]; then
-			mkdir -p $1
-		fi
-
-		if ! [ -d "$1/.git" ]; then
-			echo "error: directory is not a git repository."
-		else
-			echo $1 > ~/.recon-directory
-
-			echo "done: recon directory configured."
-		fi
-	fi
+	directory="$1"
 fi
+if [ -d $directory ]; then
+	mkdir -p $directory
+fi
+
+if ! [ -d "$directory/.git" ]; then
+	echo "init: creating git repository in $directory"
+	git init $directory
+fi
+echo $directory > ~/.recon-directory
+
+echo "done: recon directory configured."

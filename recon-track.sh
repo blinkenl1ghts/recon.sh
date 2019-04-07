@@ -2,18 +2,21 @@ source "$(dirname $0)/recon-helpers.sh"
 
 check_environment_requirements
 
-if [ -z "$1" ] || [ -z "$2" ]; then
-	echo "usage: recon.sh track <name> <command>"
+if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3"]; then
+	echo "usage: recon.sh track <name> <command> <label>"
 	exit
 fi
 
 mkdir -p "$directory/$1"
 
-if [ "$(uname)" == "Darwin" ]; then
-	filename=$(md5 -q -s "$2")
-elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-	filename=$(echo $2 | md5sum)
-fi
+#if [ "$(uname)" == "Darwin" ]; then
+#	filename=$(md5 -q -s "$2")
+#elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+#	filename=$(echo $2 | md5sum)
+#fi
+
+filename="$3"
+
 
 commit()
 {
